@@ -19,7 +19,7 @@ fun calculateSumOf(n: Int): Int {
         Thread.sleep(n / 1_000L)
     }
 
-    printThread("calculation")
+    printThread("calculation of $n")
     println("<< calculation took ${time}ms. sum of 0 to $n is $sum")
     return sum
 }
