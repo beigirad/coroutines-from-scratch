@@ -4,6 +4,7 @@ fun main(args: Array<String>) {
     printThread("before")
 
     calculateSumOf(1_000_000)
+    calculateSumOf(2_000_000)
 
     printThread("after")
 }
