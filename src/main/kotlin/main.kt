@@ -3,17 +3,12 @@ import kotlin.system.measureTimeMillis
 fun main(args: Array<String>) {
     printThread("before")
 
-    CalculatorThread(1_000_000).start()
-    CalculatorThread(2_000_000).start()
+    val task = Runnable { calculateSumOf(1_000_000) }
+    val task2 = Runnable { calculateSumOf(2_000_000) }
+    Thread(task).start()
+    Thread(task2).start()
 
     printThread("after")
-}
-
-class CalculatorThread(val n: Int) : Thread() {
-    override fun run() {
-        super.run()
-        calculateSumOf(n)
-    }
 }
 
 fun calculateSumOf(n: Int): Int {
