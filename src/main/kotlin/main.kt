@@ -1,3 +1,4 @@
+import kotlinx.coroutines.Job
 import kotlin.system.measureTimeMillis
 
 import kotlinx.coroutines.delay
@@ -12,13 +13,16 @@ fun main() = runBlocking { // this: CoroutineScope
         calculateSumOf(1_000_000)
     }
     // launch a new coroutine and start it
-    launch {
+    val job: Job = launch {
         calculateSumOf(2_000_000)
     }
     // launch a new coroutine and start it
     launch {
         calculateSumOf(3_000_000)
     }
+
+    delay(1100)
+    job.cancel()
 
     printThread("after")
 }
