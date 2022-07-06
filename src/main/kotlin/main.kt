@@ -1,24 +1,36 @@
 import kotlin.system.measureTimeMillis
 
-fun main(args: Array<String>) {
-    printThread("before")
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
-    val task = Runnable { calculateSumOf(1_000_000) }
-    val task2 = Runnable { calculateSumOf(2_000_000) }
-    Thread(task).start()
-    Thread(task2).start()
+fun main() = runBlocking { // this: CoroutineScope
+    printThread("start")
+
+    // launch a new coroutine and start it
+    launch {
+        calculateSumOf(1_000_000)
+    }
+    // launch a new coroutine and start it
+    launch {
+        calculateSumOf(2_000_000)
+    }
+    // launch a new coroutine and start it
+    launch {
+        calculateSumOf(3_000_000)
+    }
 
     printThread("after")
 }
 
-fun calculateSumOf(n: Int): Int {
+suspend fun calculateSumOf(n: Int): Int {
     println(">> start calculation for $n")
     var sum = 0
 
     // heavy calculation
     val time = measureTimeMillis {
         sum = (0..n).fold(0) { acc: Int, i: Int -> acc + i }
-        Thread.sleep(n / 1_000L)
+        delay(n / 1_000L)
     }
 
     printThread("calculation of $n")
